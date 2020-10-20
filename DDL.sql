@@ -2,7 +2,7 @@ create schema aulamineda;
 
 use aulamineda;
 
-create user 'deborasantos'@'localhost' identified by 'pass123';
+create user 'deborasantos'@'localhost' identified by 'password';
 
 grant select, insert, delete, update on aulamineda.* to deborasantos@'localhost';
 
