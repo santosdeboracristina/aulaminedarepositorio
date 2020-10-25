@@ -4,7 +4,7 @@ use aulamineda;
 
 create user 'user'@'localhost' identified by 'pass123';
 
-grant select, insert, delete, update on aulamineda.* to debora@'localhost';
+grant select, insert, delete, update on aulamineda.* to user@'localhost';
 
 create table usr_usuario (
   usr_id bigint unsigned not null auto_increment,
