@@ -30,7 +30,7 @@ create table uau_usuario_autorizacao (
 );
 
 insert into usr_usuario (usr_nome, usr_senha)
-    values ('Debora', 'SenhaFr4ca');
+    values ('Grady', 'SenhaFr4ca');
 insert into aut_autorizacao (aut_nome)
     values ('ROLE_ADMIN');
 insert into uau_usuario_autorizacao (1,1);
