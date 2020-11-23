@@ -13,6 +13,7 @@ import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
+import br.gov.sp.fatec.springbootapp.service.SegurancaService;
 
 @SpringBootTest //quando eu rodar esse teste, ele vai inciar o spring, criar os repositorios, conectar com o banco de dados, e posso usar o autowired
 @Transactional //ele abre uma transacao, cada metodo dessa classe abre uma transacao nova
@@ -23,6 +24,9 @@ class SpringBootAppApplicationTests {
 
     @Autowired //eu tenho que colocar o autowired aqui para que o spring coloque alguma coisa dentro desse autRepo, caso contrario, ficaria como NULL
     private AutorizacaoRepository autRepo;
+
+    @Autowired
+    private SegurancaService segService;
 
     @BeforeAll
     static void init(@Autowired JdbcTemplate jdbcTemplate){
@@ -38,11 +42,11 @@ class SpringBootAppApplicationTests {
     
     @Test
     void testaInsercao(){
-        final Usuario usuario = new Usuario();
+        Usuario usuario = new Usuario();
         usuario.setNome("Brian");
         usuario.setSenha("SenhaF0rte");
         usuario.setAutorizacoes(new HashSet<Autorizacao>());
-        final Autorizacao aut = new Autorizacao();
+        Autorizacao aut = new Autorizacao();
         aut.setNome("ROLE_USUARIO");
         autRepo.save(aut);
         usuario.getAutorizacoes().add(aut);
@@ -52,11 +56,11 @@ class SpringBootAppApplicationTests {
     
     @Test
     void testaInsercaoAutorizacao(){
-        final Usuario usuario = new Usuario();
+        Usuario usuario = new Usuario();
         usuario.setNome("Angel");
         usuario.setSenha("SenhaF0rte");
         usuarioRepo.save(usuario);
-        final Autorizacao aut = new Autorizacao(); //crio uma nova autorizacao
+        Autorizacao aut = new Autorizacao(); //crio uma nova autorizacao
         aut.setNome("ROLE_USUARIO2"); //nomeio ela 
         aut.setUsuarios(new HashSet<Usuario>()); //
         aut.getUsuarios().add(usuario);
@@ -66,56 +70,63 @@ class SpringBootAppApplicationTests {
 
     @Test
     void testaAutorizacao(){
-        final Usuario usuario = usuarioRepo.findById(1L).get();
+        Usuario usuario = usuarioRepo.findById(1L).get();
         assertEquals("ROLE_ADMIN", usuario.getAutorizacoes().iterator().next().getNome());
     }
     
     @Test
     void testaUsuario(){
-        final Autorizacao aut = autRepo.findById(1l).get();
+        Autorizacao aut = autRepo.findById(1l).get();
         assertEquals("Debora", aut.getUsuarios().iterator().next().getNome());
     }
 
     @Test
     void testaBuscaUsuarioNomeContains(){
-        final List<Usuario> usuarios = usuarioRepo.findByNomeContainsIgnoreCase("e");
+        List<Usuario> usuarios = usuarioRepo.findByNomeContainsIgnoreCase("e");
         assertFalse(usuarios.isEmpty());
     }
 
     @Test
     void testaBuscaUsuarioNome(){
-        final Usuario usuario = usuarioRepo.findByNome("Debora");
+        Usuario usuario = usuarioRepo.findByNome("Debora");
         assertNotNull(usuario);
     }
 
     @Test
     void testaBuscaUsuarioNomeQuery(){
-        final Usuario usuario = usuarioRepo.buscaUsuarioPorNome("Debora");
+        Usuario usuario = usuarioRepo.buscaUsuarioPorNome("Debora");
         assertNotNull(usuario);
     }
 
     @Test
     void testaBuscaUsuarioNomeSenha(){
-        final Usuario usuario = usuarioRepo.findByNomeAndSenha("Debora", "SenhaFr4ca");
+        Usuario usuario = usuarioRepo.findByNomeAndSenha("Debora", "SenhaFr4ca");
         assertNotNull(usuario);
     }
 
      @Test
     void testaBuscaUsuarioNomeSenhaQuery(){
-        final Usuario usuario = usuarioRepo.buscaUsuarioPorNomeESenha("Debora", "SenhaFr4ca");
+        Usuario usuario = usuarioRepo.buscaUsuarioPorNomeESenha("Debora", "SenhaFr4ca");
         assertNotNull(usuario);
     }
 
     @Test
     void testaBuscaUsuarioNomeAutorizacao(){
-        final List<Usuario> usuarios = usuarioRepo.findByAutorizacoesNome("ROLE_ADMIN");
+        List<Usuario> usuarios = usuarioRepo.findByAutorizacoesNome("ROLE_ADMIN");
         assertFalse(usuarios.isEmpty());
     }
 
     @Test
     void testaBuscaUsuarioNomeAutorizacaoQuery(){
-        final List<Usuario> usuarios = usuarioRepo.buscaPorNomeAutorizacao("ROLE_ADMIN");
+        List<Usuario> usuarios = usuarioRepo.buscaPorNomeAutorizacao("ROLE_ADMIN");
         assertFalse(usuarios.isEmpty());
     }
+
+    @Test
+    void testaServicoCriaUsuario(){
+       Usuario usuario = segService.criarUsuario("normal", "senha123", "ROLE_USUARIO");
+       assertNotNull(usuario);
+    }
 }
+
 
