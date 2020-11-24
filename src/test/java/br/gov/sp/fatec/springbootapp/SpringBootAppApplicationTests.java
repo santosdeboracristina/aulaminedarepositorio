@@ -10,8 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
+import br.gov.sp.fatec.springbootapp.entity.Livro;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
+import br.gov.sp.fatec.springbootapp.repository.LivroRepository;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
 import br.gov.sp.fatec.springbootapp.service.SegurancaService;
 
@@ -25,6 +27,9 @@ class SpringBootAppApplicationTests {
     @Autowired //eu tenho que colocar o autowired aqui para que o spring coloque alguma coisa dentro desse autRepo, caso contrario, ficaria como NULL
     private AutorizacaoRepository autRepo;
 
+    @Autowired //eu tenho que colocar o autowired aqui para que o spring coloque alguma coisa dentro desse autRepo, caso contrario, ficaria como NULL
+    private LivroRepository livRepo;
+
     @Autowired
     private SegurancaService segService;
 
@@ -32,7 +37,9 @@ class SpringBootAppApplicationTests {
     static void init(@Autowired JdbcTemplate jdbcTemplate){
         jdbcTemplate.update("insert into usr_usuario (usr_nome, usr_senha) values (?,?)", "Debora", "SenhaFr4ca");
         jdbcTemplate.update("insert into aut_autorizacao (aut_nome) values(?)","ROLE_ADMIN");
+        jdbcTemplate.update("insert into liv_livros (liv_titulo) values(?)","Anne_of_Green_Gables"); //add para livros
         jdbcTemplate.update("insert into uau_usuario_autorizacao (usr_id, aut_id) values (?,?)",1L, 1L);
+        jdbcTemplate.update("insert into uau_usuario_livro (usr_id, liv_id) values (?,?)",1L, 1L); //add para livros
     }
 
 	@Test
@@ -66,6 +73,21 @@ class SpringBootAppApplicationTests {
         aut.getUsuarios().add(usuario);
         autRepo.save(aut);
         assertNotNull(aut.getUsuarios().iterator().next().getId());
+    }
+
+    //testando insercao de novos livros
+    @Test
+    void testaInsercaoLivro(){
+        Usuario usuario = new Usuario();
+        usuario.setNome("Autor1");
+        usuario.setSenha("SenhaLivroTeste");
+        usuarioRepo.save(usuario);
+        Livro liv = new Livro(); //crio um novo livro
+        liv.setTitulo("Annie_Com_E"); //nomeio ele
+        liv.setUsuarios(new HashSet<Usuario>()); //
+        liv.getUsuarios().add(usuario);
+        livRepo.save(liv);
+        assertNotNull(liv.getUsuarios().iterator().next().getId());
     }
 
     @Test
