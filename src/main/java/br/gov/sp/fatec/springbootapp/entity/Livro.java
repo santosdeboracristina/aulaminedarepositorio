@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity //se eu so colocar @entity, vai dar erro, pois o nome da minha classe n eh o mesmo do bd
@@ -24,7 +24,7 @@ public class Livro {
     @Column(name = "liv_titulo", length=150, nullable = false)
     private String tituloLivro;
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "liv_titulo_usr_id")
   
     private Usuario livroUsr;
@@ -33,12 +33,12 @@ public class Livro {
         return id;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTituloLivro() {
+        return tituloLivro;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTituloLivro(String tituloLivro) {
+        this.tituloLivro = tituloLivro;
     }
 
     public void setId(Long id) {

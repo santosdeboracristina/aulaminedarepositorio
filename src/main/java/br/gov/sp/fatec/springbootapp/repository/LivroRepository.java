@@ -6,6 +6,6 @@ import br.gov.sp.fatec.springbootapp.entity.Livro;
 
 public interface LivroRepository extends JpaRepository <Livro, Long> {
 
-     public Livro findByTitulo(String Livro);
+     public Livro findByTituloLivro(String Livro);
     
 }

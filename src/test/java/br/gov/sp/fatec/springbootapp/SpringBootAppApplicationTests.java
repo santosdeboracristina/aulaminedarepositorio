@@ -39,7 +39,7 @@ class SpringBootAppApplicationTests {
         jdbcTemplate.update("insert into aut_autorizacao (aut_nome) values(?)","ROLE_ADMIN");
         jdbcTemplate.update("insert into liv_livros (liv_titulo) values(?)","Anne_of_Green_Gables"); //add para livros
         jdbcTemplate.update("insert into uau_usuario_autorizacao (usr_id, aut_id) values (?,?)",1L, 1L);
-        jdbcTemplate.update("insert into uau_usuario_livro (usr_id, liv_id) values (?,?)",1L, 1L); //add para livros
+        jdbcTemplate.update("insert into liv_titulo_usr_id (usr_id, liv_titulo) values (?,?)",1L, 1L); //add para livros
     }
 
 	@Test
@@ -50,11 +50,11 @@ class SpringBootAppApplicationTests {
     @Test
     void testaInsercao(){
         Usuario usuario = new Usuario();
-        usuario.setNome("Brian");
+        usuario.setNome("Joseph");
         usuario.setSenha("SenhaF0rte");
         usuario.setAutorizacoes(new HashSet<Autorizacao>());
         Autorizacao aut = new Autorizacao();
-        aut.setNome("ROLE_USUARIO");
+        aut.setNome("ROLE_AUTOR");
         autRepo.save(aut);
         usuario.getAutorizacoes().add(aut);
         usuarioRepo.save(usuario);
@@ -64,11 +64,11 @@ class SpringBootAppApplicationTests {
     @Test
     void testaInsercaoAutorizacao(){
         Usuario usuario = new Usuario();
-        usuario.setNome("Angel");
+        usuario.setNome("Dean");
         usuario.setSenha("SenhaF0rte");
         usuarioRepo.save(usuario);
         Autorizacao aut = new Autorizacao(); //crio uma nova autorizacao
-        aut.setNome("ROLE_USUARIO2"); //nomeio ela 
+        aut.setNome("ROLE_LEITOR"); //nomeio ela 
         aut.setUsuarios(new HashSet<Usuario>()); //
         aut.getUsuarios().add(usuario);
         autRepo.save(aut);
@@ -83,9 +83,9 @@ class SpringBootAppApplicationTests {
         usuario.setSenha("SenhaLivroTeste");
         usuarioRepo.save(usuario);
         Livro liv = new Livro(); //crio um novo livro
-        liv.setTitulo("Annie_Com_E"); //nomeio ele
-        liv.setUsuarios(new HashSet<Usuario>()); //
-        liv.getUsuarios().add(usuario);
+        liv.setTituloLivro("Annie_Com_E"); //nomeio ele
+        liv.setUsuario(new HashSet<Usuario>()); //
+        liv.getUsuario().add(usuario);
         livRepo.save(liv);
         assertNotNull(liv.getUsuarios().iterator().next().getId());
     }
@@ -93,13 +93,13 @@ class SpringBootAppApplicationTests {
     @Test
     void testaAutorizacao(){
         Usuario usuario = usuarioRepo.findById(1L).get();
-        assertEquals("ROLE_ADMIN", usuario.getAutorizacoes().iterator().next().getNome());
+        assertEquals("ROLE_AUTOR", usuario.getAutorizacoes().iterator().next().getNome());
     }
     
     @Test
     void testaUsuario(){
         Autorizacao aut = autRepo.findById(1l).get();
-        assertEquals("Debora", aut.getUsuarios().iterator().next().getNome());
+        assertEquals("Joseph", aut.getUsuarios().iterator().next().getNome());
     }
 
     @Test
@@ -140,13 +140,13 @@ class SpringBootAppApplicationTests {
 
     @Test
     void testaBuscaUsuarioNomeAutorizacaoQuery(){
-        List<Usuario> usuarios = usuarioRepo.buscaPorNomeAutorizacao("ROLE_ADMIN");
+        List<Usuario> usuarios = usuarioRepo.buscaPorNomeAutorizacao("ROLE_AUTOR");
         assertFalse(usuarios.isEmpty());
     }
 
     @Test
     void testaServicoCriaUsuario(){
-       Usuario usuario = segService.criarUsuario("normal", "senha123", "ROLE_USUARIO");
+       Usuario usuario = segService.criarUsuario("normal", "senha123", "ROLE_LEITOR");
        assertNotNull(usuario);
     }
 }

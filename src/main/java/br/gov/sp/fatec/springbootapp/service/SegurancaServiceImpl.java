@@ -33,7 +33,7 @@ public class SegurancaServiceImpl implements SegurancaService {
         usuario.setAutorizacoes(new HashSet<Autorizacao>()); //atribui uma autorizacao a ele..
         usuario.getAutorizacoes().add(aut); //adiciona essa autorizacao as autorizacoes...
         usuarioRepo.save(usuario); //salva esse usuario que eu criei e...
-        return usuario; //por fim, retorna o usuario que eu criei na linha 21 =)
+        return usuario; //por fim, retorna o usuario que eu criei na linha 23 =)
 
     }
     
