@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,12 +21,13 @@ public class Livro {
     @Column(name = "liv_id") //mapeando a tabela
     private Long id;
 
-    @Column(name = "liv_titulo")
-    private String titulo;
+    @Column(name = "liv_titulo", length=150, nullable = false)
+    private String tituloLivro;
 
-    @OneToMany (fetch = FetchType.LAZY, mappedBy = "livro") //em que lugar de usuario esta mapeado esse relacionamento "many2many?" livro + usuario
-    private Set<Usuario> usuarios;
-
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn (name = "liv_titulo_usr_id")
+  
+    private Usuario livroUsr;
 
     public Long getId() {
         return id;
@@ -43,12 +45,13 @@ public class Livro {
         this.id = id;
     }
 
-    public Set<Usuario> getUsuarios(){
-        return this.usuarios;
+    public Usuario getLivroUsr(){
+        return livroUsr;
     }
 
-    public void setUsuarios(Set<Usuario> usuarios){
-        this.usuarios = usuarios;
+    public void setLivroUsr(Usuario livroUsr){
+        this.livroUsr = livroUsr;
+    
     }
     
 }

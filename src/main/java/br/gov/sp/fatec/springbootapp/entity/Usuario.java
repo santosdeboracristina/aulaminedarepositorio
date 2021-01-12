@@ -23,10 +23,10 @@ public class Usuario {
     @Column(name = "usr_id") // mapeando a tabela
     private Long id;
 
-    @Column(name = "usr_nome")
+    @Column(name = "usr_nome", unique=true, length = 20, nullable = false)
     private String nome;
 
-    @Column(name = "usr_senha")
+    @Column(name = "usr_senha", unique=true, length = 100, nullable = false)
     private String senha;
 
     @ManyToMany(fetch = FetchType.EAGER) //quando eu procurar um usuario, o EAGER ja tras as autorizacoes tambem
@@ -46,6 +46,10 @@ public class Usuario {
     public void setAutorizacoes(Set<Autorizacao> autorizacoes) {
         this.autorizacoes = autorizacoes;
     }
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "livroUsr")
+	private Set<Livro> livros;
 
     public String getSenha() {
         return senha;
@@ -67,6 +71,8 @@ public class Usuario {
         this.id = id;
     }
 
-
-    
+    public void setLivros(Set<Livro> livros) {
+		this.livros = livros;
+	}
+	
 }
