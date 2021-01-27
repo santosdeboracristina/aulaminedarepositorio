@@ -11,7 +11,7 @@ import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.service.UsuarioService;
 
 @RestController
-@RequestMapping
+@RequestMapping (value = "/usuario")
 @CrossOrigin
 
 public class UsuarioController {
