@@ -14,6 +14,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import br.gov.sp.fatec.springbootapp.controller.View;
+
 @Entity // se eu so colocar @entity, vai dar erro, pois o nome da minha classe n eh o
         // mesmo do bd
 @Table(name = "usr_usuario") // resolvendo problema de cima
@@ -22,12 +26,15 @@ public class Usuario {
     @Id // mapeando a chave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY) // n posso receber o id, ele eh auto increment
     @Column(name = "usr_id") // mapeando a tabela
+    @JsonView(View.LivroCompleto.class)
     private Long id;
 
     @Column(name = "usr_nome", unique=true, length=20, nullable=false)
+    @JsonView(View.LivroCompleto.class)
     private String nome;
 
     @Column(name = "usr_email", unique=true, length = 100, nullable=false)
+    @JsonView(View.LivroCompleto.class)
     private String email;
 
     @Column(name = "usr_senha", unique=true, length=100, nullable=false)
