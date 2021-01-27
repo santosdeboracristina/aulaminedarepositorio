@@ -8,6 +8,8 @@ import br.gov.sp.fatec.springbootapp.entity.Livro;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.repository.LivroRepository;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Service("livroService")
@@ -21,6 +23,7 @@ public class LivroServiceImpl implements LivroService {
 
     @Override
     @Transactional
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN, 'ROLE_USER')")
     public Livro adicionarLivro(String identificadorUsuario, String titulo) {
         Usuario usuario = usuarioRepo.findTop1ByNomeOrEmail(identificadorUsuario, identificadorUsuario);
         if (usuario == null) {
