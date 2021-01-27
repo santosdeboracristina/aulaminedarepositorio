@@ -6,6 +6,7 @@ public class UsuarioDTO {
     private String email;
     private String senha;
     private String autorizacao;
+    private String token;
 
 //GETTES E SETTERS LOGO ABAIXO:
 
@@ -39,6 +40,14 @@ public class UsuarioDTO {
 
     public void setAutorizacao(String autorizacao) {
         this.autorizacao = autorizacao;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
 
