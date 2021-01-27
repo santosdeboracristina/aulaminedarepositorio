@@ -24,10 +24,13 @@ public class Usuario {
     @Column(name = "usr_id") // mapeando a tabela
     private Long id;
 
-    @Column(name = "usr_nome", unique=true, length = 20, nullable = false)
+    @Column(name = "usr_nome", unique=true, length=20, nullable=false)
     private String nome;
 
-    @Column(name = "usr_senha", unique=true, length = 100, nullable = false)
+    @Column(name = "usr_email", unique=true, length = 100, nullable=false)
+    private String email;
+
+    @Column(name = "usr_senha", unique=true, length=100, nullable=false)
     private String senha;
 
     @ManyToMany(fetch = FetchType.EAGER) //quando eu procurar um usuario, o EAGER ja tras as autorizacoes tambem
@@ -36,43 +39,56 @@ public class Usuario {
         inverseJoinColumns = { @JoinColumn(name = "aut_id")})
     private Set<Autorizacao> autorizacoes;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "autor") //No Lazy, ele tras apenas quando eu solicitar explicitamente o carregamento desse objeto
+	private Set<Livro> livros;
+
+    //GETTERS E SETTERS LOGO ABAIXO: 
+
     public Long getId() {
         return id;
     }
 
-    public Set<Autorizacao> getAutorizacoes() {
-        return this.autorizacoes;
-    }
-
-    public void setAutorizacoes(Set<Autorizacao> autorizacoes) {
-        this.autorizacoes = autorizacoes;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "livroUsr")
-	private Set<Livro> livros;
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+    public void setId(Long id) {
+		this.id = id;
+	}
 
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+		this.nome = nome;
+	}
+
+    public String getEmail() {
+        return email;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEmail(String email) {
+		this.email = email;
+	}
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+    public Set<Autorizacao> getAutorizacoes() {
+        return autorizacoes;
+    }
+
+    public void setAutorizacoes(Set<Autorizacao> autorizacoes) {
+		this.autorizacoes = autorizacoes;
+	}
+
+    public Set<Livro> getLivros() {
+        return livros;
     }
 
     public void setLivros(Set<Livro> livros) {
 		this.livros = livros;
-	}
-	
+    }
 }

@@ -16,8 +16,11 @@ public class Autorizacao {
     @Column(name = "aut_id") //mapeando a tabela
     private Long id;
 
-    @Column(name = "aut_nome")
+    @Column(name = "aut_nome", unique=true, length=20, nullable=false)
     private String nome;
+
+
+    //GETTERS E SETTERS LOGO ABAIXO: 
 
     public Long getId() {
         return id;
@@ -33,6 +36,6 @@ public class Autorizacao {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
+    }    
 
 }

@@ -1,7 +1,5 @@
 package br.gov.sp.fatec.springbootapp.entity;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,36 +20,37 @@ public class Livro {
     private Long id;
 
     @Column(name = "liv_titulo", length=150, nullable = false)
-    private String tituloLivro;
+    private String titulo;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "liv_titulo_usr_id")
+    @JoinColumn (name = "usr_autor_id")
   
-    private Usuario livroUsr;
+    private Usuario autor;
+
+    //GETTERS E SETTERS LOGO ABAIXO:
 
     public Long getId() {
         return id;
-    }
-
-    public String getTituloLivro() {
-        return tituloLivro;
-    }
-
-    public void setTituloLivro(String tituloLivro) {
-        this.tituloLivro = tituloLivro;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Usuario getLivroUsr(){
-        return livroUsr;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setLivroUsr(Usuario livroUsr){
-        this.livroUsr = livroUsr;
-    
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public Usuario getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Usuario autor) {
+        this.autor = autor;
     }
     
 }
