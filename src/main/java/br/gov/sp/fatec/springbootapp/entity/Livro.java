@@ -30,7 +30,7 @@ public class Livro {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "usr_autor_id")
-  
+    @JsonView(View.LivroCompleto.class)
     private Usuario autor;
 
     //GETTERS E SETTERS LOGO ABAIXO:
