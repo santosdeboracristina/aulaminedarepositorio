@@ -10,6 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import br.gov.sp.fatec.springbootapp.controller.View;
+
 @Entity //se eu so colocar @entity, vai dar erro, pois o nome da minha classe n eh o mesmo do bd
 @Table(name = "liv_livros") //resolvendo problema de cima
 
@@ -17,9 +21,11 @@ public class Livro {
     @Id //mapeando a chave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY) //n posso receber o id, ele eh auto increment
     @Column(name = "liv_id") //mapeando a tabela
+    @JsonView(View.LivroCompleto.class)
     private Long id;
 
     @Column(name = "liv_titulo", length=150, nullable = false)
+    @JsonView(View.LivroResumo.class)
     private String titulo;
 
     @ManyToOne(fetch = FetchType.EAGER)
