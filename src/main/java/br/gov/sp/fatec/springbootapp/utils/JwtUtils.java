@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.gov.sp.fatec.springbootapp.controller.*;
+import br.gov.sp.fatec.springbootapp.controller.UsuarioDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -18,7 +18,8 @@ public class JwtUtils {
 
     private static final String KEY = "spring.jwt.sec";
 
-    public static String generateToken(User usuario) throws JsonProcessingException {
+    public static String generateToken(User usuario) 
+            throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         UsuarioDTO usuarioSemSenha = new UsuarioDTO();
         usuarioSemSenha.setNome(usuario.getUsername());

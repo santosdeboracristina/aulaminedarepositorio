@@ -17,12 +17,10 @@ import br.gov.sp.fatec.springbootapp.entity.Livro;
 import br.gov.sp.fatec.springbootapp.repository.LivroRepository;
 import br.gov.sp.fatec.springbootapp.service.LivroService;
 
-@RestController
-@RequestMapping(value ="livro")
 @CrossOrigin
-
+@RestController
+@RequestMapping(value ="/livro")
 public class LivroController {
-
     @Autowired
     private LivroService livroService;
 

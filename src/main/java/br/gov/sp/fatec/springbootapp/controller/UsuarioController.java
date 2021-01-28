@@ -13,9 +13,8 @@ import br.gov.sp.fatec.springbootapp.service.UsuarioService;
 @RestController
 @RequestMapping (value = "/usuario")
 @CrossOrigin
-
 public class UsuarioController {
-
+    
     @Autowired
     private UsuarioService usuarioService;
 

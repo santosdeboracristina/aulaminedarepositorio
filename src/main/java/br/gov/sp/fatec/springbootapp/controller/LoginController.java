@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.sp.fatec.springbootapp.utils.JwtUtils;
 
+
 @RestController
 @CrossOrigin
 public class LoginController {
+    
     @Autowired
     private AuthenticationManager auth;
 
