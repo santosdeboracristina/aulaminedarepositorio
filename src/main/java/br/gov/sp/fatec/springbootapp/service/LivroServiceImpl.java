@@ -23,7 +23,7 @@ public class LivroServiceImpl implements LivroService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN, 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public Livro adicionarLivro(String identificadorUsuario, String titulo) {
         Usuario usuario = usuarioRepo.findTop1ByNomeOrEmail(identificadorUsuario, identificadorUsuario);
         if (usuario == null) {
